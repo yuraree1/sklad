@@ -44,7 +44,7 @@ def add_sale(product_id, quantity, who, when=None):
         created_at=datetime.now()
     else:
         created_at=when
-    if get_stock(product_id) < quantity:
+    if get_stock(product_id, created_at) < quantity:
         raise ValueError("Insufficient stock of the product.")
     
     movements.append({"product_id": product_id, "quantity": -quantity, 
@@ -52,3 +52,19 @@ def add_sale(product_id, quantity, who, when=None):
 
         
 
+add_product("cola", "л", 10)
+add_product("cake", "г", 6)
+
+print(products)
+
+add_receipt(1, 5, "tom")
+add_receipt(1, 2, "ted")
+
+print(get_stock(1))
+
+print(movements)
+
+add_receipt(1, 8, "ted")
+
+
+print(movements)
