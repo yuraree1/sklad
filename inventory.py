@@ -22,11 +22,19 @@ def add_receipt(product_id, quantity, who, when=None):
         raise ValueError("This product is not available.")
     if when is None:
         created_at=datetime.now()
+    else:
+        created_at=when
     movements.append({"product_id": product_id, "quantity": quantity, 
-                      "operation": "receipt", "time":created_at, "who": who})
+                      "operation": "receipt", "created_at":created_at, "who": who})
+    
+def get_stock(product_id):
+    result_quantity=0
+    for move in movements:
+        if move["product_id"]==product_id:
+            number=move["quantity"]
+            result_quantity+=number
 
-add_product("cola")
-add_product("cake")
-add_product("telephone")
+    return result_quantity
 
-print(products)
+        
+
