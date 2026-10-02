@@ -50,21 +50,17 @@ def add_sale(product_id, quantity, who, when=None):
     movements.append({"product_id": product_id, "quantity": -quantity, 
                           "operation": "sale", "created_at":created_at, "who": who})
 
+
+def low_stock():
+    low_products=[]
+    for product_id, product in products.items():
+        min_stock=product["min_stock"]
+        stock=get_stock(product_id)
+        if stock <= min_stock:
+            low_products.append({"product_id": product_id, 
+                                 "name": product["name"], "stock": stock})
+
+    return low_products
+
+
         
-
-add_product("cola", "л", 10)
-add_product("cake", "г", 6)
-
-print(products)
-
-add_receipt(1, 5, "tom")
-add_receipt(1, 2, "ted")
-
-print(get_stock(1))
-
-print(movements)
-
-add_receipt(1, 8, "ted")
-
-
-print(movements)
